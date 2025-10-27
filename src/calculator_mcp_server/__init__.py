@@ -654,7 +654,7 @@ def matrix_determinant(matrix: List[List[float]]) -> dict:
 
 
 @app.tool()
-def vector_dot_product(vector_a: tuple[float], vector_b: tuple[float]) -> dict:
+def vector_dot_product(vector_a: List[float], vector_b: List[float]) -> dict:
     """
     Computes the dot product of two vectors.
 
@@ -686,7 +686,7 @@ def vector_dot_product(vector_a: tuple[float], vector_b: tuple[float]) -> dict:
 
 
 @app.tool()
-def vector_cross_product(vector_a: tuple[float], vector_b: tuple[float]) -> dict:
+def vector_cross_product(vector_a: List[float], vector_b: List[float]) -> dict:
     """
     Computes the cross product of two 3D vectors.
 
@@ -718,7 +718,7 @@ def vector_cross_product(vector_a: tuple[float], vector_b: tuple[float]) -> dict
 
 
 @app.tool()
-def vector_magnitude(vector: tuple[float]) -> dict:
+def vector_magnitude(vector: List[float]) -> dict:
     """
     Computes the magnitude of a vector.
 

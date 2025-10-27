@@ -28,6 +28,8 @@ members = ["x"]
 [dependency-groups]
 dev = [
     "pytest>=8.4.2",
+    "pytest-asyncio>=0.23.0",
+    "pytest-cov>=4.0.0",
 ]
 
 [build-system]
