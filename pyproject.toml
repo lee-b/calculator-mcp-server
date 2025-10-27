@@ -1,11 +1,11 @@
 [project]
 name = "calculator-mcp-server"
-version = "2.0.3"
+version = "2.0.4"
 description = "A server for complex mathematical calculations"
 readme = "README.md"
 requires-python = ">=3.10"
 dependencies = [
-    "fastmcp>=0.4.1",
+    "fastmcp==2.5.1",
     "numpy>=2.2.0",
     "scipy>=1.15.0",
     "sympy>=1.13.0",

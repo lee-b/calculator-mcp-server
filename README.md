@@ -2,6 +2,8 @@
 
 This is a Model Context Protocol (MCP) server that provides Claude with advanced mathematical calculation capabilities, including symbolic math, statistical analysis, and matrix operations.
 
+This is a (heavily modified, not rewritten) version of https://github.com/huhabla/calculator-mcp-server. Mostly I had AI code the addition of heavy testing and bug fixes and until it worked.
+
 ## Features
 
 The Mathematical Calculator MCP Server provides the following tools:
@@ -28,7 +30,7 @@ The Mathematical Calculator MCP Server provides the following tools:
 
 - Python 3.10+ (recommended: Python 3.11+)
 - [uv](https://github.com/astral-sh/uv) (recommended) or pip
-
+- Internet access for uv to download other dependencies during install
 
 ### Installation Steps
 
