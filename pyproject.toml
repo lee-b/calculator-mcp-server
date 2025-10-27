@@ -1,10 +1,6 @@
-[build-system]
-requires = ["setuptools>=61.0", "wheel"]
-build-backend = "setuptools.build_meta"
-
 [project]
 name = "calculator-mcp-server"
-version = "2.0.0"
+version = "2.0.1"
 description = "A server for complex mathematical calculations"
 readme = "README.md"
 requires-python = ">=3.10"
@@ -21,12 +17,19 @@ dependencies = [
 dev = ["pytest>=8.3.0"]
 
 [project.scripts]
-calculator-mcp-server = "src.calculator_mcp_server:main"
+calculator-mcp-server = "calculator_mcp_server:main"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.uv.workspace]
+members = ["x"]
 
 [dependency-groups]
 dev = [
     "pytest>=8.4.2",
 ]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
