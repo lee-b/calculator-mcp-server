@@ -28,7 +28,7 @@ The Mathematical Calculator MCP Server provides the following tools:
 
 - Python 3.10+ (recommended: Python 3.11+)
 - [uv](https://github.com/astral-sh/uv) (recommended) or pip
-- Claude Desktop app (to use the MCP server with Claude)
+
 
 ### Installation Steps
 
@@ -58,9 +58,9 @@ The Mathematical Calculator MCP Server provides the following tools:
 
 ## Integration with Claude Desktop
 
-### Method 1: Configure in Claude Desktop
+### Method 1: Configure in stdio-capable MCP client
 
-Add the server to your Claude Desktop configuration file:
+Add the server to your MCP client configuration file:
 
 **macOS**: `~/Library/Application Support/Claude/claude_desktop_config.json`  
 **Windows**: `%APPDATA%\Claude\claude_desktop_config.json`
@@ -100,11 +100,11 @@ Add the following to the `mcpServers` section:
    fastmcp install calculator_server.py --name "Math Calculator"
    ```
 
-3. Once installed, Claude will automatically have access to all the mathematical tools and functions.
+3. Once installed, your AI should automatically have access to all the mathematical tools and functions.
 
 ## Usage Examples
 
-After integrating with Claude Desktop, you can ask Claude to perform various mathematical operations. Here are some examples:
+After integrating with your AI, you should be able to ask IT to perform various mathematical operations. Here are some examples:
 
 ### Basic Calculations
 ```
@@ -149,23 +149,52 @@ and
 [11, 12]
 ```
 
+## Advanced Usage Examples
+
+### Complex Expressions
+
+- Calculate the indefinite integral: "x^2 * sin(x)"
+- Solve an equation: "x^2 - 5x + 6 = 0"
+- Differentiate a function: "ln(x^2 + 1)"
+
+Note: The server requires mathematical expressions as input, not free natural language.
+
+### Matrix and Vector Operations
+
+- Matrix inversion: "Invert the matrix [[1,2],[3,4]]"
+- Vector normalization: "Normalize the vector [3,4,5]"
+- Matrix eigenvalue: "Find eigenvalues of [[2,1],[1,2]]"
+
+### Statistical Computations
+
+- Hypothesis testing: "Perform t-test on datasets [1,2,3] and [4,5,6]"
+- ANOVA: "Compute ANOVA for groups [[1,2],[3,4],[5,6]]"
+- Regression analysis: "Fit polynomial regression of degree 2 to points [(1,1),(2,4),(3,9)]"
+
+## Limitations and Notes
+
+- **Safe Evaluation Restrictions**: Expressions are evaluated in a restricted environment with only whitelisted mathematical functions and constants to prevent security vulnerabilities. Arbitrary code execution is not allowed.
+- **Plotting Display Requirements**: Plotting functions require a graphical display environment (e.g., X11 on Linux, or a compatible setup). Plots may not display in headless environments.
+- **Input Data Types**: All numerical inputs must be provided as floats or integers. Lists and tuples are accepted for datasets, matrices, and vectors. Invalid data types will result in errors.
+
+## Tool Quick Reference
+
+| Category              | Tools                                                                 |
+|-----------------------|-----------------------------------------------------------------------|
+| Basic Calculations    | calculate                                                            |
+| Symbolic Mathematics  | solve_equation, differentiate, integrate, expand, factorize          |
+| Statistical Analysis  | mean, variance, standard_deviation, median, mode, correlation_coefficient, linear_regression, confidence_interval |
+| Matrix Operations     | matrix_addition, matrix_multiplication, matrix_transpose, matrix_determinant |
+| Vector Operations     | vector_dot_product, vector_cross_product, vector_magnitude           |
+| Plotting              | plot_function                                                        |
+| Other                 | summation                                                            |
+
 ## Development
 
 ### Testing
 
-Run the comprehensive doctest suite:
-```bash
-bash run_doctests.sh
-```
+Run `uv run pytest`
 
-### Interactive Development Mode
-
-For development and debugging, you can use the FastMCP development mode:
-```bash
-fastmcp dev calculator_server.py
-```
-
-This will start a local web interface where you can test all tools interactively.
 
 ## License
 
@@ -176,3 +205,4 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 - [FastMCP](https://github.com/jlowin/fastmcp) for the Pythonic MCP server framework
 - [SymPy](https://sympy.org/) for symbolic mathematics
 - [NumPy](https://numpy.org/) and [SciPy](https://scipy.org/) for numerical and statistical computations
+- https://github.com/huhabla/calculator-mcp-server - the original from which this was forked (and heavily modified, but not rewritten)

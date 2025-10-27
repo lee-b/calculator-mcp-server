@@ -143,6 +143,12 @@ def solve_equation(equation: str) -> dict:
         - Use 'x' as the variable (e.g., x**2, not x²)
         - Multiplication must be explicitly indicated with * (e.g., 2*x, not 2x)
         - Powers are represented with ** (e.g., x**2, not x^2)
+        - Input format: Expression as string with SymPy-compatible syntax; start, end, step as integers.
+        - Common errors: SympifyError for invalid syntax; matplotlib display issues in headless environments.
+        - Input format: Equation must be a string with exactly one '=' separating left and right sides; only variable 'x' allowed.
+        - Common errors: Missing or multiple '=' signs; use of variables other than 'x'; equations that cannot be solved symbolically.
+        - Input format: Expression must be a string with valid mathematical syntax using allowed functions (sin, cos, etc.) and constants (pi, e).
+        - Common errors: NameError for undefined variables/functions; SyntaxError for invalid syntax; TypeError if input is not a string.
     """
     try:
         x = symbols("x")
@@ -199,6 +205,8 @@ def differentiate(expression: str, variable: str = "x") -> dict:
         - Powers are represented with ** (e.g., x**2, not x^2)
         - For trigonometric functions, use sin(x), cos(x), etc.
         - Only support for one variable at a time (implicit differentiation not supported)
+        - Input format: Expression as string with SymPy-compatible syntax; variable as string (e.g., 'x', 'y').
+        - Common errors: SyntaxError for malformed expressions; SympifyError for unsupported syntax; variables not present in expression.
     """
     if not any(c.isdigit() for c in expression) and not any(op in expression for op in ['+', '-', '*', '/', '**', '(', ')']) and expression != 'x':
         return {"error": "Invalid expression"}
@@ -244,6 +252,8 @@ def integrate(expression: str, variable: str = "x") -> dict:
     Notes:
         - The result is the indefinite integral without the constant of integration
         - Complex expressions may be returned in simplified form
+        - Input format: Expression as string with SymPy-compatible syntax; variable as string (default 'x').
+        - Common errors: SympifyError for invalid syntax; integrals that cannot be computed symbolically (e.g., non-elementary functions).
     """
     if not any(c.isdigit() for c in expression) and not any(op in expression for op in ['+', '-', '*', '/', '**', '(', ')']) and expression != 'x':
         return {"error": "Invalid expression"}
@@ -273,6 +283,10 @@ def mean(data: List[float]) -> dict:
         {'result': 2.5}
         >>> mean([10, 20, 30])
         {'result': 20.0}
+
+    Notes:
+        - Input format: Data must be a list of numeric values (int or float).
+        - Common errors: Empty list; non-numeric elements in list.
     """
     if not data:
         return {"error": "Data cannot be empty"}
@@ -298,6 +312,10 @@ def variance(data: List[float]) -> dict:
     Examples:
         >>> variance([1, 2, 3, 4])
         {'result': 1.25}
+
+    Notes:
+        - Input format: Data must be a list of numeric values (int or float).
+        - Common errors: Empty list; non-numeric elements in list.
     """
     if not data:
         return {"error": "Data cannot be empty"}
@@ -323,6 +341,10 @@ def standard_deviation(data: List[float]) -> dict:
     Examples:
         >>> standard_deviation([1, 2, 3, 4])
         {'result': 1.118033988749895}
+
+    Notes:
+        - Input format: Data must be a list of numeric values (int or float).
+        - Common errors: Empty list; non-numeric elements in list.
     """
     if not data:
         return {"error": "Data cannot be empty"}
@@ -348,6 +370,10 @@ def median(data: List[float]) -> dict:
     Examples:
         >>> median([1, 2, 3, 4])
         {'result': 2.5}
+
+    Notes:
+        - Input format: Data must be a list of numeric values (int or float).
+        - Common errors: Empty list; non-numeric elements in list.
     """
     if not data:
         return {"error": "Data cannot be empty"}
@@ -377,6 +403,10 @@ def mode(data: List[float]) -> dict:
         {'result': 1.0}
         >>> mode([])
         {'error': 'Cannot compute mode of empty array'}
+
+    Notes:
+        - Input format: Data must be a list of numeric values (int or float).
+        - Common errors: Empty list; non-numeric elements in list.
     """
     try:
         if not data:
@@ -404,6 +434,10 @@ def correlation_coefficient(data_x: List[float], data_y: List[float]) -> dict:
     Examples:
         >>> correlation_coefficient([1, 2, 3], [4, 5, 6])
         {'result': 1.0}
+
+    Notes:
+        - Input format: Two lists of equal length with numeric values (int or float).
+        - Common errors: Lists of different lengths; empty lists; non-numeric elements.
     """
     if not data_x or not data_y:
         return {"error": "Data cannot be empty"}
@@ -433,6 +467,10 @@ def linear_regression(data: List[Tuple[float, float]]) -> dict:
     Examples:
         >>> linear_regression([(1, 2), (2, 3), (3, 5)])
         {'slope': 1.5, 'intercept': 0.3333333333333335}
+
+    Notes:
+        - Input format: Data as list of tuples (x, y) where x and y are numeric.
+        - Common errors: Fewer than 2 points; non-numeric values in tuples.
     """
     if len(data) < 2:
         return {"error": "At least two points are required for linear regression"}
@@ -466,6 +504,10 @@ def confidence_interval(data: List[float], confidence: float = 0.95) -> dict:
         >>> np.random.seed(42)  # For reproducible results
         >>> confidence_interval([1, 2, 3, 4])
         {'confidence_interval': (0.445739743239121, 4.5542602567608785)}
+
+    Notes:
+        - Input format: Data as list of numeric values; confidence as float between 0 and 1 (default 0.95).
+        - Common errors: Empty data list; confidence not between 0 and 1; non-numeric data.
     """
     if not data:
         return {"error": "Data cannot be empty"}
@@ -501,6 +543,10 @@ def matrix_addition(matrix_a: List[List[float]], matrix_b: List[List[float]]) ->
     Examples:
         >>> matrix_addition([[1, 2], [3, 4]], [[5, 6], [7, 8]])
         {'result': [[6, 8], [10, 12]]}
+
+    Notes:
+        - Input format: Two matrices as lists of lists with numeric values, same dimensions.
+        - Common errors: Matrices of different sizes; empty matrices; non-numeric elements.
     """
     if not matrix_a or not matrix_b or not all(row for row in matrix_a) or not all(row for row in matrix_b):
         return {"error": "Matrices cannot be empty"}
@@ -531,6 +577,10 @@ def matrix_multiplication(
     Examples:
         >>> matrix_multiplication([[1, 2], [3, 4]], [[5, 6], [7, 8]])
         {'result': [[19, 22], [43, 50]]}
+
+    Notes:
+        - Input format: Two matrices as lists of lists; columns of first must equal rows of second.
+        - Common errors: Dimension mismatch; empty matrices; non-numeric elements.
     """
     if not matrix_a or not matrix_b or not all(row for row in matrix_a) or not all(row for row in matrix_b):
         return {"error": "Matrices cannot be empty"}
@@ -558,6 +608,10 @@ def matrix_transpose(matrix: List[List[float]]) -> dict:
     Examples:
         >>> matrix_transpose([[1, 2], [3, 4]])
         {'result': [[1, 3], [2, 4]]}
+
+    Notes:
+        - Input format: Matrix as list of lists with numeric values.
+        - Common errors: Empty matrix; non-numeric elements.
     """
     if not matrix or not all(row for row in matrix):
         return {"error": "Matrix cannot be empty"}
@@ -583,6 +637,10 @@ def matrix_determinant(matrix: List[List[float]]) -> dict:
     Examples:
         >>> matrix_determinant([[1, 2], [3, 4]])
         {'result': -2.0}
+
+    Notes:
+        - Input format: Square matrix as list of lists with numeric values.
+        - Common errors: Non-square matrix; empty matrix; non-numeric elements.
     """
     if not matrix or not all(row for row in matrix):
         return {"error": "Matrix cannot be empty"}
@@ -611,6 +669,10 @@ def vector_dot_product(vector_a: tuple[float], vector_b: tuple[float]) -> dict:
     Examples:
         >>> vector_dot_product([1, 2], [7, 8])
         {'result': 23}
+
+    Notes:
+        - Input format: Two vectors as tuples of numeric values, same length.
+        - Common errors: Vectors of different lengths; empty vectors; non-numeric elements.
     """
     if not vector_a or not vector_b:
         return {"error": "Vectors cannot be empty"}
@@ -639,6 +701,10 @@ def vector_cross_product(vector_a: tuple[float], vector_b: tuple[float]) -> dict
     Examples:
         >>> vector_cross_product([1, 2, 3], [4, 5, 6])
         {'result': [-3, 6, -3]}
+
+    Notes:
+        - Input format: Two 3D vectors as tuples of numeric values.
+        - Common errors: Vectors not of length 3; empty vectors; non-numeric elements.
     """
     if not vector_a or not vector_b:
         return {"error": "Vectors cannot be empty"}
@@ -666,6 +732,10 @@ def vector_magnitude(vector: tuple[float]) -> dict:
     Examples:
         >>> vector_magnitude([1, 2, 3])
         {'result': 3.7416573867739413}
+
+    Notes:
+        - Input format: Vector as tuple of numeric values.
+        - Common errors: Empty vector; non-numeric elements.
     """
     if not vector:
         return {"error": "Vector cannot be empty"}
@@ -741,6 +811,10 @@ def summation(expression: str, start: int = 0, end: int = 10) -> dict:
     Examples:
         >>> summation("x**2", 0, 10)
         {'result': 385}
+
+    Notes:
+        - Input format: Expression as string with SymPy syntax; start and end as integers.
+        - Common errors: SympifyError for invalid expression; non-integer bounds.
     """
     try:
         x = sp.Symbol("x")
@@ -767,6 +841,10 @@ def expand(expression: str) -> dict:
     Examples:
         >>> expand("(x + 1)**2")
         {'result': 'x**2 + 2*x + 1'}
+
+    Notes:
+        - Input format: Expression as string with SymPy syntax.
+        - Common errors: SympifyError for invalid syntax.
     """
     if not any(c.isdigit() for c in expression) and not any(op in expression for op in ['+', '-', '*', '/', '**', '(', ')']) and expression != 'x':
         return {"error": "Invalid expression"}
@@ -793,6 +871,10 @@ def factorize(expression: str) -> dict:
     Examples:
         >>> factorize("x**2 + 2*x + 1")
         {'result': '(x + 1)**2'}
+
+    Notes:
+        - Input format: Expression as string with SymPy syntax.
+        - Common errors: SympifyError for invalid syntax; expressions that cannot be factored.
     """
     if not any(c.isdigit() for c in expression) and not any(op in expression for op in ['+', '-', '*', '/', '**', '(', ')']) and expression != 'x':
         return {"error": "Invalid expression"}
