@@ -34,7 +34,7 @@ The Mathematical Calculator MCP Server provides the following tools:
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/huhabla/calculator-mcp-server.git
+   git clone https://github.com/lee-b/calculator-mcp-server.git
    cd calculator-mcp-server
    ```
 
@@ -74,7 +74,7 @@ Add the following to the `mcpServers` section:
       "command": "uvx",
       "args": [
         "--from",
-        "calculator-mcp-server@git+https://github.com/huhabla/calculator-mcp-server.git",
+        "calculator-mcp-server@git+https://github.com/lee-b/calculator-mcp-server.git",
         "--",
         "calculator-mcp-server",
         "--stdio"
