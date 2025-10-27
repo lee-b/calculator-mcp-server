@@ -75,6 +75,48 @@ class TestServerStartup:
         sys.argv = ['test']
         try:
             main()
-            mock_run.assert_called_once_with(transport="sse")
+            mock_run.assert_called_once_with(transport="sse", host="0.0.0.0", port=9191)
+        finally:
+            sys.argv = original_argv
+
+    @patch.object(app, 'run')
+    def test_server_startup_sse_custom_host(self, mock_run):
+        """Test server startup with SSE transport and custom host."""
+        from calculator_mcp_server import main
+        import sys
+        # Mock sys.argv to simulate --host argument
+        original_argv = sys.argv
+        sys.argv = ['test', '--host', '127.0.0.1']
+        try:
+            main()
+            mock_run.assert_called_once_with(transport="sse", host="127.0.0.1", port=9191)
+        finally:
+            sys.argv = original_argv
+
+    @patch.object(app, 'run')
+    def test_server_startup_sse_custom_port(self, mock_run):
+        """Test server startup with SSE transport and custom port."""
+        from calculator_mcp_server import main
+        import sys
+        # Mock sys.argv to simulate --port argument
+        original_argv = sys.argv
+        sys.argv = ['test', '--port', '8080']
+        try:
+            main()
+            mock_run.assert_called_once_with(transport="sse", host="0.0.0.0", port=8080)
+        finally:
+            sys.argv = original_argv
+
+    @patch.object(app, 'run')
+    def test_server_startup_sse_custom_host_and_port(self, mock_run):
+        """Test server startup with SSE transport and custom host and port."""
+        from calculator_mcp_server import main
+        import sys
+        # Mock sys.argv to simulate --host and --port arguments
+        original_argv = sys.argv
+        sys.argv = ['test', '--host', '127.0.0.1', '--port', '8080']
+        try:
+            main()
+            mock_run.assert_called_once_with(transport="sse", host="127.0.0.1", port=8080)
         finally:
             sys.argv = original_argv

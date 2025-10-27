@@ -10,6 +10,7 @@ import sympy as sp
 import numpy as np
 import matplotlib.pyplot as plt
 from sympy import integrate as sympy_integrate
+import logging
 
 # Create MCP Server
 app = FastMCP(
@@ -80,7 +81,7 @@ def calculate(expression: str) -> dict:
 
     Args:
         expression: The mathematical expression to evaluate as a string.
-                   Examples: "2 + 2", "sin(pi/4)", "sqrt(16) * 2", "log(100, 10)"
+                    Examples: "2 + 2", "sin(pi/4)", "sqrt(16) * 2", "log(100, 10)"
 
     Returns:
         On success: {"result": <calculated value>}
@@ -101,6 +102,8 @@ def calculate(expression: str) -> dict:
         - Multiplication must be explicitly indicated with * (e.g., 2*x, not 2x)
         - Powers are represented with ** (e.g., x**2, not x^2)
     """
+    logging.info("Calculate tool called with expression: %s", expression)
+    logging.debug("Calculate tool is being executed")
     try:
         # Safe evaluation of the expression
         result = eval(
@@ -108,8 +111,10 @@ def calculate(expression: str) -> dict:
             {"__builtins__": {}},
             ALLOW_FUNCTION,
         )
+        logging.info("Calculate tool returning result: %s", result)
         return {"result": result}
     except Exception as e:
+        logging.error("Calculate tool error: %s", str(e))
         return {"error": str(e)}
 
 
@@ -887,13 +892,23 @@ def factorize(expression: str) -> dict:
     except Exception:
         return {"error": "Invalid expression"}
 
+logging.info("All tools registered: %s", list(app._tool_manager._tools.keys()))
+
 def main():
+    logging.basicConfig(level=logging.INFO)
     parser = argparse.ArgumentParser(description="Mathematical Calculator MCP Server")
     parser.add_argument("--stdio", action="store_true", help="Use STDIO transport instead of SSE")
+    parser.add_argument("--host", default="0.0.0.0", help="Host for SSE mode (default: 0.0.0.0)")
+    parser.add_argument("--port", type=int, default=9191, help="Port for SSE mode (default: 9191)")
     args = parser.parse_args()
-    
+
     transport = "stdio" if args.stdio else TRANSPORT
-    app.run(transport=transport)
+    logging.info("Starting server with transport: %s", transport)
+    logging.info("Tools registered before run: %s", list(app._tool_manager._tools.keys()))
+    if transport == "sse":
+        app.run(transport="sse", host=args.host, port=args.port)
+    else:
+        app.run(transport=transport)
 
 if __name__ == "__main__":
     main()

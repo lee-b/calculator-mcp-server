@@ -16,7 +16,7 @@ class TestArgumentParsing:
             sys.argv = ['test']
             try:
                 main()
-                mock_run.assert_called_once_with(transport="sse")
+                mock_run.assert_called_once_with(transport="sse", host="0.0.0.0", port=9191)
             finally:
                 sys.argv = original_argv
 
@@ -69,7 +69,7 @@ class TestTransportModes:
         sys.argv = ['test']
         try:
             main()
-            mock_run.assert_called_once_with(transport="sse")
+            mock_run.assert_called_once_with(transport="sse", host="0.0.0.0", port=9191)
         finally:
             sys.argv = original_argv
 
